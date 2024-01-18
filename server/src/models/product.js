@@ -8,7 +8,7 @@ const ProductModal = new Schema(
     },
     photo: {
       type: String,
-      required: [true, "Product photo is required field"],
+      // required: [true, "Product photo is required field"],
     },
     price: {
       type: Number,
@@ -21,9 +21,10 @@ const ProductModal = new Schema(
     category: {
       type: String,
       required: [true, "Category is required field"],
+      trim: true,
     },
   },
   { timestamps: true }
 );
 
-export const product = mongoose.Model("product", ProductModal);
+export const product = mongoose.model("product", ProductModal);
