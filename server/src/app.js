@@ -5,7 +5,7 @@ import cookieParser from "cookie-parser";
 import userRouter from "./routes/user.routes.js";
 import productRouter from "./routes/product.routes.js";
 import NodeCache from "node-cache";
-
+import morgan from "morgan";
 const app = express();
 const apiVersion = "/api/v1";
 app.use(
@@ -18,9 +18,10 @@ app.use(express.json({ limit: "16kb" }));
 app.use(express.urlencoded({ extended: true, limit: "16kb" }));
 app.use(express.static("public"));
 app.use(cookieParser());
+app.use(morgan("dev"));
 
 export const myCache = new NodeCache();
- //routes declaration
+//routes declaration
 app.use("/api/v1/users", userRouter);
 app.use(`${apiVersion}/product`, productRouter);
 
