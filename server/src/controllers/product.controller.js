@@ -5,6 +5,7 @@ import { ApiResponse } from "../utils/apiResponse.js";
 import { asyncHandler } from "../utils/asyncHandler.js";
 import { faker } from "@faker-js/faker";
 import { inValidatorCache } from "../utils/cacheHandler.js";
+
 const createProduct = asyncHandler(async (req, res) => {
   const { name, price, stock, category } = req.body;
   if (
