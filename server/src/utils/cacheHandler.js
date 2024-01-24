@@ -1,5 +1,5 @@
 import { myCache } from "../app.js";
-import { product } from "../models/product.js";
+import { product } from "../models/product.modal.js";
 
 const inValidatorCache = async ({ Product, order, admin }) => {
   if (Product) {

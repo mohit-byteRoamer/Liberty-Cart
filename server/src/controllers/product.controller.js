@@ -1,5 +1,5 @@
 import { myCache } from "../app.js";
-import { product } from "../models/product.js";
+import { product } from "../models/product.modal.js";
 import { ApiError } from "../utils/ApiError.js";
 import { ApiResponse } from "../utils/apiResponse.js";
 import { asyncHandler } from "../utils/asyncHandler.js";
