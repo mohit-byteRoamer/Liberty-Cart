@@ -25,8 +25,8 @@ const OrderModal = new Schema(
       },
     },
     user: {
-      type: mongoose.Types.ObjectId,
-      ref: "User",
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "user",
       required: [true, "User id is required"],
     },
     subTotal: {

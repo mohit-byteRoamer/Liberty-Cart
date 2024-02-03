@@ -13,6 +13,9 @@ const inValidatorCache = async ({ Product, order, admin }) => {
   }
 
   if (order) {
+    const cacheKeys = myCache.keys();
+    const orderKeysArray = cacheKeys.filter((val) => val.startsWith("order-"));
+    myCache.del(orderKeysArray);
   }
 
   if (admin) {

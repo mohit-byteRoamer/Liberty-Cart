@@ -5,11 +5,11 @@ import validator from "validator";
 
 const UserModel = new Schema(
   {
-    _id: {
-      unique: true,
-      type: String,
-      required: [true, "Please enter ID"],
-    },
+    // _id: {
+    //   unique: true,
+    //   type: String,
+    //   required: [true, "Please enter ID"],
+    // },
     email: {
       unique: [true, "Email already exist"],
       type: String,
@@ -27,7 +27,7 @@ const UserModel = new Schema(
     },
     avatar: {
       type: String,
-      required: [true, "Avatar is required"],
+      // required: [true, "Avatar is required"],
     },
     role: {
       type: String,
@@ -37,11 +37,11 @@ const UserModel = new Schema(
     gender: {
       type: String,
       enum: ["male", "female"],
-      required: [true, "Please enter gender"],
+      // required: [true, "Please enter gender"],
     },
     dob: {
       type: Date,
-      required: [true, "Please enter Dob"],
+      // required: [true, "Please enter Dob"],
     },
 
     fullName: {
@@ -64,7 +64,6 @@ const UserModel = new Schema(
   },
   { timestamps: true }
 );
-
 UserModel.virtual("age").get(() => {
   const today = new Date();
   const dob = this.dob;
@@ -108,4 +107,4 @@ UserModel.methods.generateRefreshToken = function () {
   );
 };
 
-export const user = mongoose.model("User", UserModel);
+export const user = mongoose.model("user", UserModel);

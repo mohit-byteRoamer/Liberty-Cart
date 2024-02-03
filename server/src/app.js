@@ -7,8 +7,10 @@ import productRouter from "./routes/product.routes.js";
 import NodeCache from "node-cache";
 import morgan from "morgan";
 import orderRouter from "./routes/order.routes.js";
-import bodyParser from 'body-parser'; // Importing body-parser
+import bodyParser from "body-parser"; // Importing body-parser
+import paymentRouter from "./routes/payment.routes.js";
 
+export const myCache = new NodeCache();
 
 const app = express();
 const apiVersion = "/api/v1";
@@ -24,11 +26,11 @@ app.use(express.static("public"));
 app.use(cookieParser());
 app.use(morgan("dev"));
 
-export const myCache = new NodeCache();
 //routes declaration
 
 app.use(`${apiVersion}/users`, userRouter);
 app.use(`${apiVersion}/product`, productRouter);
 app.use(`${apiVersion}/order`, orderRouter);
+app.use(`${apiVersion}/payment`, paymentRouter);
 
 export { app };

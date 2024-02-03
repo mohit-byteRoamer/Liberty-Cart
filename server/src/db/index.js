@@ -6,11 +6,6 @@ const ConnectDB = async () => {
     const dbConnection = await mongoose.connect(
       `${process.env.MONGODB_URI}/${DB_NAME}`
     );
-    // const dbConnection = await mongoose.connect("mongodb://127.0.0.1:27017", {
-    //   dbName: DB_NAME,
-    //   useNewUrlParser: true,
-    //   useUnifiedTopology: true,
-    // });
     console.log(
       `\n MongoDB Connected !! DB HOST : ${dbConnection.connection.host}`
     );
