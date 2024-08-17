@@ -28,6 +28,9 @@ app.use(cookieParser());
 app.use(morgan("dev"));
 
 //routes declaration
+app.get("/", (req, res) => {
+  res.send("Hello, Vercel!");
+});
 
 app.use(`${apiVersion}/users`, userRouter);
 app.use(`${apiVersion}/product`, productRouter);
