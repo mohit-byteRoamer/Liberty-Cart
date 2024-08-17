@@ -28,13 +28,13 @@ const registerUser = asyncHandler(async (req, res) => {
   if (existedUser) {
     new ApiError(409, "User with email or username already exists");
   }
-  const avatarLocalPath = req.files?.avatar[0]?.path;
-  const coverImageLocalPath = req.files?.coverImage[0]?.path;
-  if (!avatarLocalPath) {
-    throw new ApiError(400, "Avatar file is required");
-  }
-  const isUploadAvatar = await uploadOnCloudinary(avatarLocalPath);
-  const isUploadCoverImage = await uploadOnCloudinary(coverImageLocalPath);
+  // const avatarLocalPath = req.files?.avatar[0]?.path;
+  // const coverImageLocalPath = req.files?.coverImage[0]?.path;
+  // if (!avatarLocalPath) {
+  //   throw new ApiError(400, "Avatar file is required");
+  // }
+  // const isUploadAvatar = await uploadOnCloudinary(avatarLocalPath);
+  // const isUploadCoverImage = await uploadOnCloudinary(coverImageLocalPath);
   // if (!isUploadAvatar) {
   //   throw new ApiError(400, "Avatar file is required");
   // }
@@ -43,8 +43,8 @@ const registerUser = asyncHandler(async (req, res) => {
     userName: userName.toLowerCase(),
     email,
     fullName,
-    avatar: isUploadAvatar?.url,
-    coverImage: isUploadCoverImage?.url || "",
+    // avatar: isUploadAvatar?.url,
+    // coverImage: isUploadCoverImage?.url || "",
     password,
   });
   const createUser = await user
@@ -108,6 +108,7 @@ const loginUser = asyncHandler(async (req, res) => {
 // Check user exist in db with email
 // remove refresh tokens
 const logoutUser = asyncHandler(async (req, res) => {
+  console.log(req, "logoutUser");
   await user.findByIdAndUpdate(
     req.user._id,
     {
@@ -122,6 +123,7 @@ const logoutUser = asyncHandler(async (req, res) => {
     httpOnly: true,
     secure: true,
   };
+
   return res
     .status(200)
     .clearCookie("accessToken", option)

@@ -8,6 +8,7 @@ import { inValidatorCache } from "../utils/cacheHandler.js";
 
 const createProduct = asyncHandler(async (req, res) => {
   const { name, price, stock, category } = req.body;
+  console.log(name, price, stock, category);
   if (
     [name, price, stock, category].some((val) => val == "" || val == undefined)
   ) {
@@ -21,7 +22,7 @@ const createProduct = asyncHandler(async (req, res) => {
     category,
     // photo: productImage?.path,
   });
-  await inValidatorCache({ Product: true });
+  // await inValidatorCache({ Product: true });
   return res
     .status(200)
     .json(new ApiResponse(200, Product, "Product Created Successfully"));

@@ -5,12 +5,16 @@ import {
   deleteCoupon,
   getAllCoupon,
 } from "../controllers/payment.controller.js";
+import { isAdmin, verifyJWT } from "../middlewares/auth.middlewares.js";
 
 const paymentRouter = Router();
 
-paymentRouter.route("/coupon-create").post(createCoupon);
-paymentRouter.route("/discount").get(applyDiscount);
-paymentRouter.route("/all-coupons").get(getAllCoupon);
-paymentRouter.route("/:id").get().delete(deleteCoupon);
+// User Router
+paymentRouter.route("/discount").get(verifyJWT, applyDiscount);
+
+// Admin Router
+paymentRouter.route("/coupon-create").post(verifyJWT, isAdmin, createCoupon);
+paymentRouter.route("/all-coupons").get(verifyJWT, isAdmin, getAllCoupon);
+paymentRouter.route("/:id").get().delete(verifyJWT, isAdmin, deleteCoupon);
 
 export default paymentRouter;

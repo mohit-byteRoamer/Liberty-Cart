@@ -5,6 +5,7 @@ import { app } from "./app.js";
 dotenv.config({
   path: "./.env",
 });
+
 const asciiDog = `
   / \\__
  (    @\\____
@@ -12,6 +13,7 @@ const asciiDog = `
 /   (_____/
 /_____/  UU
 `;
+
 ConnectDB()
   .then(() => {
     const port = process.env.PORT || 8000;

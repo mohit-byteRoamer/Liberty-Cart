@@ -38,9 +38,12 @@ const deleteCoupon = asyncHandler(async (req, res) => {
 
 const applyDiscount = asyncHandler(async (req, res) => {
   const { code } = req.query;
+
   const Coupon = await coupon.findOne({ code });
-  if (Coupon ?? false) new ApiError(404, "Invalid Coupon");
-  console.log(Coupon);
+
+  if (Coupon == null || Coupon == undefined)
+    throw new ApiError(404, "Invalid Coupon");
+
   await res
     .status(200)
     .json(new ApiResponse(200, Coupon.amount, "Discount Apply Successfully"));

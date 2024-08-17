@@ -6,9 +6,11 @@ const inValidatorCache = async ({ Product, order, admin }) => {
     const productKey = ["latestProduct", "productCategory", "adminProduct"];
 
     const productId = await product.find({}).select("_id");
-    productId.forEach((element) =>
-      productKey.push(`getSingleProduct-${element._id}`)
-    );
+    if (productId.length > 0) {
+      // productId.forEach((element) =>
+      //   productKey.push(`getSingleProduct-${element._id}`)
+      // );
+    }
     myCache.del(productKey);
   }
 

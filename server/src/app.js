@@ -9,6 +9,7 @@ import morgan from "morgan";
 import orderRouter from "./routes/order.routes.js";
 import bodyParser from "body-parser"; // Importing body-parser
 import paymentRouter from "./routes/payment.routes.js";
+import dashboard from "./routes/stats.routes.js";
 
 export const myCache = new NodeCache();
 
@@ -32,5 +33,6 @@ app.use(`${apiVersion}/users`, userRouter);
 app.use(`${apiVersion}/product`, productRouter);
 app.use(`${apiVersion}/order`, orderRouter);
 app.use(`${apiVersion}/payment`, paymentRouter);
+app.use(`${apiVersion}/dashboard`, dashboard);
 
 export { app };

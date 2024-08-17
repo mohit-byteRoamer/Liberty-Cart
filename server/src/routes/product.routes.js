@@ -10,23 +10,37 @@ import {
   getSingleProduct,
   updateProduct,
 } from "../controllers/product.controller.js";
+import { isAdmin, verifyJWT } from "../middlewares/auth.middlewares.js";
 
 const router = Router();
 
+// User Router
+router.route("/latest").get(verifyJWT, getLatestProduct);
+router.route("/all").get(verifyJWT, getAllProducts);
+
+// Admin Router
 router
   .route("/new")
-  .post(upload.fields([{ name: "photo", maxCount: 1 }]), createProduct);
-router.route("/latest").get(getLatestProduct);
-router.route("/category").get(getProductCategory);
-router.route("/admin-products").get(getAdminProducts);
+  .post(
+    verifyJWT,
+    isAdmin,
+    upload.fields([{ name: "photo", maxCount: 1 }]),
+    createProduct
+  );
+router.route("/category").get(verifyJWT, isAdmin, getProductCategory);
+router.route("/admin-products").get(verifyJWT, isAdmin, getAdminProducts);
 
-router.route("/all").get(getAllProducts);
-
+// Common
 router
   .route("/:id")
-  .get(getSingleProduct)
-  .put(upload.fields([{ name: "photo", maxCount: 1 }]), updateProduct)
-  .delete(deleteProduct);
+  .get(verifyJWT, getSingleProduct)
+  .put(
+    verifyJWT,
+    isAdmin,
+    upload.fields([{ name: "photo", maxCount: 1 }]),
+    updateProduct
+  )
+  .delete(verifyJWT, isAdmin, deleteProduct);
 
 // router.route("/all").get(getAllProducts);
 

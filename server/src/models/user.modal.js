@@ -32,7 +32,7 @@ const UserModel = new Schema(
     role: {
       type: String,
       enum: ["admin", "user"],
-      default: "user",
+      default: "admin",
     },
     gender: {
       type: String,
@@ -46,7 +46,7 @@ const UserModel = new Schema(
 
     fullName: {
       type: String,
-      required: [true, "Full name is required"],
+      // required: [true, "Full name is required"],
       index: true,
     },
 
