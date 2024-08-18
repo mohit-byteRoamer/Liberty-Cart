@@ -17,16 +17,30 @@ import mongoose from "mongoose";
 
 const registerUser = asyncHandler(async (req, res) => {
   const { userName, email, fullName, avatar, coverImage, password } = req.body;
+  // if (
+  //   [userName, email, fullName, avatar, password].some(
+  //     (field) => field?.trim() == ""
+  //   )
+  // ) {
+  //   new ApiError(400, "All fields are required");
+  // }
+
   if (
-    [userName, email, fullName, avatar, password].some(
+    [userName, email, password].some(
       (field) => field?.trim() == ""
     )
   ) {
-    new ApiError(400, "All fields are required");
+    return res
+      .status(400)
+      .json(new ApiError(400, "All fields are required"));
   }
+
   const existedUser = await user.findOne({ $or: [{ userName }, { email }] });
-  if (existedUser) {
-    new ApiError(409, "User with email or username already exists");
+
+  if (existedUser !== null) {
+    return res
+      .status(209)
+      .json(new ApiError(409, "User with email or username already exists"));
   }
   // const avatarLocalPath = req.files?.avatar[0]?.path;
   // const coverImageLocalPath = req.files?.coverImage[0]?.path;
@@ -38,7 +52,6 @@ const registerUser = asyncHandler(async (req, res) => {
   // if (!isUploadAvatar) {
   //   throw new ApiError(400, "Avatar file is required");
   // }
-  console.log(typeof userName, "userName");
   const saveUser = await user.create({
     userName: userName.toLowerCase(),
     email,
@@ -66,17 +79,20 @@ const registerUser = asyncHandler(async (req, res) => {
 // Create refresh tokens
 const loginUser = asyncHandler(async (req, res) => {
   const { email, userName, password } = req.body;
+
   if ([email, password].some((val) => val == "")) {
-    throw new ApiError(400, "All fields are required");
+    return res.status(400).json(new ApiError(400, "All fields are required"));
   }
+
   const User = await user.findOne({ $or: [{ email }, { userName }] });
-  console.log(email, userName, password, User, "-USER");
   if (!User) {
-    throw new ApiError(409, "User not found");
+      return res
+        .status(409)
+        .json(new ApiError(409, "User not found"));
   }
   const isPasswordCorrect = await User.isPasswordCorrect(password);
   if (!isPasswordCorrect) {
-    throw new ApiError(401, "Incorrect password");
+     return res.status(401).json(new ApiError(401, "Incorrect password"));
   }
   const { accessToken, refreshToken } = await generateAccessAndRefreshTokens(
     User._id
